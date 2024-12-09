@@ -1,87 +1,81 @@
-**CSE 478: Homework #X (Extra Credit)**  
-**Title:** Visualizing UFC Fights: Odds, Winners, and More
 
-**Overview:**  
-In this assignment, you will create an interactive, animated data visualization using D3.js. You’ll be visualizing mixed martial arts fight data from the provided UFC dataset. Your visualization should help users explore how fight outcomes and betting odds vary over time, weight classes, and countries. You will use D3 joins to bind data to your visual elements, transitions to animate changes to the visualization, and an interactive timeline slider or playback button to filter and display fights from different event dates.
+# CSE 478: Homework #X: UFC Fights Visualization
 
-This assignment is designed to test your skills in:  
-- Data joins and updates when filtering or changing parameters  
-- Animated transitions in D3  
-- Implementing a time-based "playback" or slider interface  
-- Encoding multiple data attributes (e.g., winners, odds, and fight outcomes) in a meaningful way
+## Overview
 
-**Data Source:**  
-You will be using a subset of the data from `ufc-master.csv` (provided in the starter code folder). This dataset includes details about UFC fights such as fighter names, odds, expected values, dates, winners, weight class, gender, location, and finishing methods, among others.
+In this assignment, you will use D3.js to visualize data from a large `ufc-master.csv` dataset. The dataset includes thousands of UFC fights with attributes such as fighter odds, dates, winners, finishing methods, and more. Your goal is to provide insights into how fight odds and outcomes vary over time.
 
-**Your Task:**  
-You will create a web-based visualization (using D3 v7 or later) that allows users to explore how fight outcomes and betting odds vary by date and weight class. Specifically, you’ll implement the following features:
+**Key Changes:**  
+This assignment is simplified compared to previous versions. You will produce **two main visualizations** and may implement a **third optional visualization** for extra credit. Additional extra credit is available for implementing transitions and comparison features.
 
-### 0. Setup & Housekeeping (5 points)  
-- **Title & Identification:** At the top of your HTML page, add a title for the visualization: "UFC Fights: Odds & Outcomes".  
-- Add your name, email, and date submitted at the top as well.  
-- Include a brief one-paragraph introduction describing what the dataset is and what users can learn from your visualization.
+Data
+**Dataset:** `ufc-master.csv` (provided)  
+You have access to a large dataset of UFC fights with attributes including date, fighter odds, winner, finishing method, weight class, location, and more.  
 
-### 1. Load & Process the Data (10 points)  
-- Load the provided `ufc-master.csv` dataset using D3.  
-- Parse dates properly (the `Date` field is in YYYY-MM-DD format).  
-- Filter out rows with missing essential information (e.g., fights with empty odds). Document your filtering criteria in comments.  
-- Create derived fields if needed. For example, you may want to create a categorical variable indicating "favorite" (the fighter with the lower absolute odds) versus "underdog," or separate data into date buckets (e.g., by year or month).
+You must load and parse the dataset (e.g., convert numeric fields, parse dates) and handle missing data as needed.
 
-### 2. Static Visualization: Aggregation by Time & Weight Class (20 points)  
-- Create an SVG-based chart that initially shows aggregated information over a specified time period.  
-  - For example, show a bar chart of the average "RedDecOdds" (or another odds measure) by major weight classes (e.g., Heavyweight, Lightweight, Bantamweight, etc.) for fights that occurred during the first quarter of 2024.  
-- Each bar should represent a weight class, and the height should encode the average odds of the red-corner fighter (or a chosen metric).  
-- Add axes, a legend if needed, and clearly label your chart and axes.
+## Visualization Requirements
 
-### 3. Interactivity: Filtering by Date via a Slider or Playback Button (25 points)  
-- Add a horizontal date slider or a step-based "play/pause" button that lets the user control which date (or date range) of fights they are viewing.  
-- When the user moves the slider or clicks a "play" button, the visualization should update to reflect the fights for that selected date or date range.  
-  - For example, if the slider moves from January to February 2024, the bars should update to show the aggregated average odds for only the February fights.  
-- This step requires you to implement proper data joins and updates. You should transition the bars to their new heights smoothly, using D3 transitions. No instant jumps!
+You will create **two main required visualizations** and have the option for extra credit to add a third visualization and additional interaction.
 
-### 4. Animated Transitions (20 points)  
-- When the user changes the date, update the visualization with a transition.  
-  - Bars should animate from old values to new values (height changes should be visible).  
-- Include at least one other transition effect. For example, you could fade out and in the y-axis scale or position labels as the data changes.  
-- The transitions should be smooth, taking about 750 ms to 1 second.
+### 0. Set-up (5 points)
 
-### 5. Adding Fighter-Level Detail on Hover (15 points)  
-- When a user hovers over a bar, show a tooltip or a secondary display that highlights detailed fighter-level information for the chosen time frame and weight class.  
-  - For example, display the number of fights in that class, the name of a top fighter (e.g., the fighter who had the best odds), or the most common finishing method during that period.  
-- This detail view should update each time the main display changes date ranges.  
-- The tooltip should appear near the mouse and disappear on mouseout.
+- Add a title to your web page: "UFC Fights Visualization"  
+- Include your name and email at the top of the page.  
+- Add a short introductory paragraph (2-3 sentences) describing what the dataset is and what users can learn from your visualizations.
 
-### 6. Extra Interface Element: Compare Two Dates (Optional Extra Credit, up to +5%)  
-- Add a second slider or a toggle that lets the user compare two distinct date ranges side-by-side.  
-  - For instance, draw two sets of bars: one for the current selected date range and one for a historical date range. Animate transitions as the user changes the comparison period.  
-- This comparison feature is optional but can help you earn additional credit.
+### 1. Visualization #1: Odds Over Time (30 points)
 
-### 7. Code Quality & Comments (5 points)  
-- Your code should be well-structured and commented.  
-- Variables and functions should have meaningful names.  
-- Include a brief README section at the top of your JavaScript file that summarizes your approach and any assumptions.
+- Create a **line chart** that shows how the average odds of the "Red" fighter changes over time.  
+  - For example, aggregate the data by month (or another suitable time bucket) and compute the average RedOdds for each month.  
+  - The x-axis should represent time, and the y-axis should represent the average RedOdds.  
+- Add appropriate axes, labels, and a title.  
+- This visualization should provide an overall trend of how fighter odds vary over time.
 
-**Hints & Reminders:**  
-- Don’t forget to convert numerical values from strings using `+` or `parseFloat`.  
-- For date parsing, use D3’s time parsing utilities.  
-- Carefully consider your data joins. On each update (when the slider changes), some weight classes may appear or disappear in that timeframe. Ensure you handle enter/exit selections correctly.  
-- Try to keep the visualization simple and clear. A good initial guess might be to focus on about 4-6 major weight classes.  
-- Consider using `d3.scaleTime` for the slider and `d3.brushX` or an HTML input element for the date slider.  
-- For transitions, remember `.transition()` and `.duration()` methods on selections.
+### 2. Visualization #2: Finishing Methods by Selected Month (30 points)
 
-**Submission Instructions:**  
-- Submit your HTML, CSS, and JS files along with any supporting files.  
-- Include the dataset or ensure your code loads `ufc-master.csv` from the provided location.  
-- Provide a link or instructions to run your code on a local server.
+- Below the line chart, create a **bar chart** (or another suitable chart) that shows the distribution of finishing methods (e.g., KO/TKO, Submission, Decision) for a user-selected month (or time period).  
+- Provide a simple interface (like a dropdown or a slider) that allows the user to select a specific month (or date range). When changed, the bar chart updates to show the finishing method counts or percentages for that selected month.  
+- Add appropriate axes, labels, and a legend if needed.  
+- This visualization allows the user to drill down into a specific time period from the line chart to see what types of finishes were most common.
 
-**Grading Breakdown (100 points + optional extra credit):**  
+### Extra Credit #1: Third Visualization (up to +10 points)
+
+- Add a **third visualization** of your choice that relates to the data. Some ideas:
+  - A scatter plot showing odds vs. fighter height or reach, filtered by a user selection.
+  - A heatmap calendar showing the number of fights per day.
+  - A stacked bar chart showing finishing methods by weight class.
+- This visualization should be distinct from the first two and should provide additional insight into the data.
+
+### Extra Credit #2: Transitions (up to +5 points)
+
+- Add transitions when updating the bar chart for the selected month.  
+- For example, when the user picks a new month, the bars should animate to their new heights rather than jump instantly.
+
+### Extra Credit #3: Comparison Mode (up to +5 points)
+
+- Add a comparison feature that allows the user to compare two months side-by-side in the second visualization.  
+- For instance, show two sets of bars: one for the currently selected month and one for a user-defined "comparison" month.  
+- Include transitions when switching months in comparison mode.
+
+## Code Quality & Comments (5 points)
+
+- Write clear, well-structured, and well-commented code.  
+- Briefly summarize your approach and any assumptions at the top of your main JavaScript file.
+
+## Grading Breakdown
+
 - (5 pts) Title, name, introduction  
-- (10 pts) Data loading and processing  
-- (20 pts) Initial static visualization  
-- (25 pts) Interactive slider/date control and filtering  
-- (20 pts) Smooth transitions and animated updates  
-- (15 pts) Hover tooltip with fighter-level details  
-- (5 pts) Code quality, clarity, and comments  
-- (+ up to 5% extra) Comparison mode or other creative interactive features
+- (30 pts) Visualization #1: Odds Over Time  
+- (30 pts) Visualization #2: Finishing Methods by Selected Month (with interactive selection)  
+- (5 pts) Code clarity and comments  
+- Extra Credit:  
+  - (+ up to 10 pts) Third Visualization  
+  - (+ up to 5 pts) Transitions  
+  - (+ up to 5 pts) Comparison Mode
 
-We look forward to seeing your creative solutions and how you leverage transitions, filtering, and D3’s core functionalities to tell a story about UFC fights!
+**Total possible (without extra credit):** 70 points  
+**Maximum with all extra credit:** 90+ points
+
+**Submission:**  
+- Submit your HTML, CSS, JS, and `ufc-master.csv` files.  
