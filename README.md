@@ -11,7 +11,7 @@ For this  assignment, you will create an interactive, multi-view visualization u
 - Cheating or using AI-generated code is not allowed.  
 
 **Dataset**
-You will use the provided `ufc.csv` dataset. This is a subset of the dataset `ufc-master.csv`: [(https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)]
+You will use the provided `ufc.csv` dataset. This is a subset of the dataset `[ufc-master.csv](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)`
 
 The data includes attributes such as:  
 - **Date** (fight event date)  
@@ -35,10 +35,10 @@ You may assume that the dataset is located at `data/ufc-master.csv`
 Create a control panel (positioned at the top or side of the page) containing:
 
 1. **Dataset Selector:** A `<select>` to choose from `ufc-master.csv`, `Test1`, and `Test2`. When the dataset changes, you must re-load the data and update all dropdowns and charts accordingly.
-2. **Time Aggregation Attribute:** A dropdown to specify how to group fights over time for the first visualization (e.g., by month or quarter).  
-3. **Stacked Category Attribute:** A dropdown to choose which categorical attribute to use for a stacked area or stacked bar chart (e.g., Finish method, WeightClass). This will define the segments in the stacked chart.
-4. **Distribution Attribute (Beeswarm Plot):** A dropdown for choosing a quantitative attribute (e.g., RedOdds, RedAge, RedHeightCms) to display in a **beeswarm plot**. This attribute will determine the axis position of points.
-5. **Color Attribute (Beeswarm Plot):** A dropdown to choose a categorical attribute (e.g., WeightClass, Gender) to color the beeswarm points.
+2. **Time Aggregation Attribute:** A dropdown to specify how to group fights over time for the first visualization.  
+3. **Stacked Category Attribute:** A dropdown to choose which categorical attribute to use for a stacked area or stacked bar chart. This will define the segments in the stacked chart.
+4. **Distribution Attribute (Beeswarm Plot):** A dropdown for choosing a quantitative attribute to display in a **beeswarm plot**. This attribute will determine the axis position of points.
+5. **Color Attribute (Beeswarm Plot):** A dropdown to choose a categorical attribute to color the beeswarm points.
 6. **Detail Attribute (Grouped Bar Chart):** A dropdown for selecting which categorical attribute to show in the grouped bar chart that summarizes the selected fights from the beeswarm.
 
 The control panel should be well-labeled and styled. When the user picks new attributes, update the visualizations accordingly with smooth transitions.
@@ -52,7 +52,7 @@ Implement a **stacked area chart** or **stacked bar chart** that shows the numbe
 - A legend should show the color-keyed categories.
 - Implement a **brush** on this chart: the user can click and drag over the time axis to highlight a subset of time periods. This brushed selection will filter which fights are displayed in the other views (beeswarm and grouped bar chart).
 
-When the user changes the stacked category or dataset, update the stacks with a transition (e.g., smoothly morph from the old segmentation to the new one).
+When the user changes the stacked category or dataset, update the stacks with a transition.
 
 ## Step 3: Beeswarm Plot of Selected Subset
 
@@ -81,18 +81,15 @@ When the user lassos points in the beeswarm, create or update a **grouped bar ch
 ## Step 5: Staged Transitions and Clearing States
 
 - When attributes or datasets change:
-  - Animate the stacked chart (e.g., smoothly transition from old stack segments to new).
+  - Animate the stacked chart.
   - Animate beeswarm points to new positions if Distribution Attribute changes.
   - Clear or update the grouped bar chart accordingly.
 - When the brush on the stacked chart changes the time range, smoothly update the beeswarm points (add/remove points, or move them).
-- When the lasso selection changes (including clearing it), animate the grouped bar chart to show/hide bars.
+- When the lasso selection changes, animate the grouped bar chart to show/hide bars.
 
 ## Grading and Submission
-
-- Your solution should be clear, functional, and well-structured.
-- Include comments explaining key parts of your code and logic.
-- We will test using the provided `ufc-master.csv` and hidden test datasets.
-- Submit `index.html`, `styles.css`, `script.js`, and `ufc-master.csv`. Include instructions for any special server needs.
+- We will test using the provided `ufc.csv` and hidden test datasets.
+- Submit `index.html`, `styles.css`, `script.js`, and `ufc.csv`. Include instructions for any special server needs.
 
 Points (Approximate):  
 - Control panel & dataset loading: 2 points  
