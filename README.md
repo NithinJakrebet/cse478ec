@@ -11,7 +11,7 @@ For this  assignment, you will create an interactive, multi-view visualization u
 - Cheating or using AI-generated code is not allowed.  
 
 **Dataset**
-You will use the provided `ufc.csv` dataset. This is a subset of the dataset `[ufc-master.csv](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)`
+You will use the provided `ufc.csv` dataset. This is a subset of the dataset [ufc-master.csv](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)
 
 The data includes attributes such as:  
 - **Date** (fight event date)  
