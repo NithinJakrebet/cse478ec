@@ -1,101 +1,84 @@
-
-
 # Homework #X: UFC Visualization with D3 Transitions and Linked Views
 
-## **Overview:**  
-For this  assignment, you will create an interactive, multi-view visualization using D3.js to analyze a large UFC dataset. You will produce three linked visualizations that allow users to explore fight trends over time, investigate the distribution of selected attributes, and drill down into finer-grained categorizations through brushing and lasso selection
+## Overview
 
-**Important Notes:**  
-- Your final visualization must demonstrate clear and thoughtful design, with axes, legends, and labels that update dynamically.  
-- **No starter code provided.** You will write everything from scratch.  
-- Cheating or using AI-generated code is not allowed.  
+In this assignment, you will build an interactive, multi-view visualization using D3.js to explore a UFC dataset. You will create three linked visualizations:
 
-**Dataset**
-You will use the provided `ufc.csv` dataset. This is a subset of the dataset [ufc-master.csv](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)
+1. A stacked chart over time to understand fight trends.
+2. A beeswarm plot to show the distribution of selected attributes.
+3. A grouped bar chart that summarizes subsets selected via lassoing points in the beeswarm.
 
-The data includes attributes such as:  
-- **Date** (fight event date)  
-- **Fighter attributes:** RedOdds, BlueOdds, RedAge, BlueAge, RedHeightCms, RedReachCms, and so forth  
-- **Categorical attributes:** Finish method (e.g., KO/TKO, Submission, Decision), WeightClass, Country, Gender, Location, TitleBout (True/False)  
-- **Quantitative attributes:** Odds, heights, weights, ages, etc.
+You will implement controls, brushing, lassoing, transitions, and dynamic updates as the user interacts with the interface.
 
-You may assume that the dataset is located at `data/ufc-master.csv`
-- You must support switching to hidden test datasets ("Test1" and "Test2") as well, located at `/data/Test1.csv` and `/data/Test2.csv`.  
-- Your code should dynamically parse the datasets.  
-- Ensure that changing attributes or datasets do not break your visualization.
+**Important:**  
+- Write all code from scratch (no starter code).  
+- Must use D3 joins, transitions, and dynamic updates.  
+- No cheating or using AI-generated code. 
 
-## Step 0: Set-Up
+## Data
+The dataset is `ufc.csv` located at `data/ufc.csv` (a subset of [ufc-master.csv](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv). Support switching to hidden test datasets (`Test1.csv` and `Test2.csv`) as well.
 
-1. Create `index.html`, `styles.css`, and `main.js`.
-2. Add a title: **"UFC Fights Visualization"**.
-3. Include your name and school email 
+Contains date, fighter attributes (odds, age, height, reach), categorical attributes (finish method, weight class, country, etc.), and more.
 
-## Step 1: Control Panel & Dataset Loading
+You will also add options for `Test1.csv` and `Test2.csv`, located at `data/Test1.csv` and `data/Test2.csv`  (which we will provide during grading). Your code should handle them gracefully.
 
-Create a control panel (positioned at the top or side of the page) containing:
+## Step-by-Step Requirements
 
-1. **Dataset Selector:** A `<select>` to choose from `ufc-master.csv`, `Test1`, and `Test2`. When the dataset changes, you must re-load the data and update all dropdowns and charts accordingly.
-2. **Time Aggregation Attribute:** A dropdown to specify how to group fights over time for the first visualization.  
-3. **Stacked Category Attribute:** A dropdown to choose which categorical attribute to use for a stacked area or stacked bar chart. This will define the segments in the stacked chart.
-4. **Distribution Attribute (Beeswarm Plot):** A dropdown for choosing a quantitative attribute to display in a **beeswarm plot**. This attribute will determine the axis position of points.
-5. **Color Attribute (Beeswarm Plot):** A dropdown to choose a categorical attribute to color the beeswarm points.
-6. **Detail Attribute (Grouped Bar Chart):** A dropdown for selecting which categorical attribute to show in the grouped bar chart that summarizes the selected fights from the beeswarm.
+### Step 0: Setup
 
-The control panel should be well-labeled and styled. When the user picks new attributes, update the visualizations accordingly with smooth transitions.
+- Create `index.html`, `styles.css`, `main.js`.  
+- Add a title: "UFC Fights Visualization".  
+- Include your name and email.
 
-## Step 2: Stacked Chart Over Time
+### Step 1: Control Panel
 
-Implement a **stacked area chart** or **stacked bar chart** that shows the number of fights over time, segmented by the chosen Stacked Category Attribute. For example, if the user chooses "Finish" as the attribute, each segment in the stack represents a finish type, and the total height shows total fights per time unit.
+Create a control panel with the following selects:
 
-- The x-axis: Time (based on the selected time aggregation, e.g. monthly or quarterly bins).
-- The y-axis: Count of fights.
-- A legend should show the color-keyed categories.
-- Implement a **brush** on this chart: the user can click and drag over the time axis to highlight a subset of time periods. This brushed selection will filter which fights are displayed in the other views (beeswarm and grouped bar chart).
+- **Dataset Selector:** Choose `ufc.csv`, `Test1`, `Test2`.  
+- **Time Aggregation:** How to group fights over time (e.g., by month or quarter).  
+- **Stacked Category Attribute:** A categorical attribute to segment the stacked chart.  
+- **Distribution Attribute (Beeswarm):** A quantitative attribute for the beeswarm’s x-axis.  
+- **Color Attribute (Beeswarm):** A categorical attribute that colors the beeswarm points.  
+- **Detail Attribute (Grouped Bar):** A categorical attribute to summarize lassoed points.
 
-When the user changes the stacked category or dataset, update the stacks with a transition.
+When any control changes, update the visualizations accordingly.
 
-## Step 3: Beeswarm Plot of Selected Subset
+### Step 2: Stacked Chart Over Time
 
-Below or beside the stacked chart, create a **beeswarm plot** that shows the distribution of the selected Distribution Attribute for the fights within the currently brushed time range. If no brush is active, the beeswarm shows all fights.
+- Implement a stacked area or bar chart showing the count of fights over time.  
+- Segments represent categories chosen by the Stacked Category Attribute.  
+- Add a brush so the user can select a time range. This filters the data shown in the beeswarm and grouped bar chart.
 
-- The beeswarm plot’s x-axis will represent the chosen quantitative attribute (Distribution Attribute).
-- Each point corresponds to one fight, and is colored by the chosen Color Attribute (categorical).
-- Include a small legend or color key for the beeswarm categories.
+When dataset or category changes, animate the stacked chart’s transitions.
 
-Implement a **lasso tool** on the beeswarm plot:
+### Step 3: Beeswarm Plot
 
-- The user can click-drag to lasso a subset of points.
-- Highlight selected points and de-emphasize others.
-- Clicking without dragging resets the selection (no points selected).
+- The beeswarm plot shows the distribution of the chosen Distribution Attribute for the currently brushed time range.  
+- Color the points by the selected Color Attribute.  
+- If no brush is active, show all fights.  
+- Update and animate points when attributes change.
 
-Whenever the brushed time range changes on the stacked chart, the beeswarm updates to show only those fights in that time subset. Animate point transitions if the attribute changes (e.g., points move horizontally if the Distribution Attribute changes).
+### Step 4: Lasso & Grouped Bar Chart
 
-### Step 4: Grouped Bar Chart of Lassoed Points
+- Implement a lasso on the beeswarm plot to select points.  
+- Selected points are highlighted, others de-emphasized.  
+- When points are selected, draw a grouped bar chart summarizing them by the chosen Detail Attribute.  
+- If no selection, show no bars (or animate bars to zero).
 
-When the user lassos points in the beeswarm, create or update a **grouped bar chart** that summarizes the selected points by the chosen Detail Attribute (categorical). For example, if Detail Attribute = WeightClass, each bar group represents a category (e.g., Featherweight, Lightweight, etc.), and the height represents the count of selected points in that category.
+### Step 5: Transitions & Updates
 
-- If no points are selected, the grouped bar chart should show no bars (or animate them to zero).
-- If points become selected, animate the bars growing from zero to their appropriate height.
-- When attributes change or the selection changes, update the bars smoothly.
+- On attribute or dataset changes, animate the stacked chart and beeswarm points.  
+- On brushing changes, update the beeswarm points smoothly.  
+- On lasso changes, animate the grouped bar chart.
 
-## Step 5: Staged Transitions and Clearing States
+## Grading & Submission
 
-- When attributes or datasets change:
-  - Animate the stacked chart.
-  - Animate beeswarm points to new positions if Distribution Attribute changes.
-  - Clear or update the grouped bar chart accordingly.
-- When the brush on the stacked chart changes the time range, smoothly update the beeswarm points (add/remove points, or move them).
-- When the lasso selection changes, animate the grouped bar chart to show/hide bars.
-
-## Grading and Submission
-- We will test using the provided `ufc.csv` and hidden test datasets.
-- Submit `index.html`, `styles.css`, `script.js`, and `ufc.csv`. Include instructions for any special server needs.
-
-Points (Approximate):  
-- Control panel & dataset loading: 2 points  
-- Stacked chart & brushing: 3 points  
-- Beeswarm plot & attribute changes: 3 points  
-- Lasso and linked grouped bar chart: 2 points  
-- Staged transitions & design quality: ~1 points  
-
-**Total (without extra credit):** 11 points 
+- Submit `index.html`, `styles.css`, `main.js`, and `ufc.csv`.  
+- We will test with `ufc.csv` and hidden test sets.  
+- Points (approximate):  
+  - Control panel & dataset loading: 2 pts  
+  - Stacked chart & brushing: 3 pts  
+  - Beeswarm & attribute changes: 3 pts  
+  - Lasso & grouped bar: 2 pts  
+  - Design & transitions: 1 pt  
+**Total: 11 points**
