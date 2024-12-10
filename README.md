@@ -17,7 +17,7 @@ Your page will include a control panel allowing users to switch datasets, select
 
 ## Dataset
 
-You will use the provided `ufc.csv` dataset, which is a subset of the [ufc-master.csv dataset from Kaggle](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv). The data includes:
+You will use the following [ufc-master.csv dataset from Kaggle](https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv). The data includes:
 
 - **Dates** of fights
 - **Fighter attributes:** Odds, Age, Height, Reach, etc.
