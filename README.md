@@ -3,29 +3,26 @@
 # Homework #X: UFC Visualization with D3 Transitions and Linked Views
 
 ## **Overview:**  
-For this optional extra credit assignment, you will create an interactive, multi-view visualization using D3.js to analyze a large UFC dataset. You will produce three linked visualizations that allow users to explore fight trends over time, investigate the distribution of selected attributes, and drill down into finer-grained categorizations through brushing and lasso selections. This assignment is similar in spirit to Homework #4 (in terms of using D3 joins, transitions, and coordinated views), but with a different set of visualizations and interactions.
-
-This assignment is worth up to 1% extra credit towards your overall course grade.
+For this  assignment, you will create an interactive, multi-view visualization using D3.js to analyze a large UFC dataset. You will produce three linked visualizations that allow users to explore fight trends over time, investigate the distribution of selected attributes, and drill down into finer-grained categorizations through brushing and lasso selection
 
 **Important Notes:**  
-- You must implement data-driven joins, animated transitions, brushing, and lassoing, as well as a control panel with various interactive components.  
 - Your final visualization must demonstrate clear and thoughtful design, with axes, legends, and labels that update dynamically.  
 - **No starter code provided.** You will write everything from scratch.  
 - Cheating or using AI-generated code is not allowed.  
-- This is extra credit and should reflect a solid understanding of D3’s capabilities.
 
 **Dataset**
-You will use the provided `ufc-master.csv` dataset, which includes thousands of UFC fights. The data includes attributes such as:  
+You will use the provided `ufc.csv` dataset. This is a subset of the dataset `ufc-master.csv`: [(https://www.kaggle.com/datasets/mdabbert/ultimate-ufc-dataset?select=ufc-master.csv)]
+
+The data includes attributes such as:  
 - **Date** (fight event date)  
 - **Fighter attributes:** RedOdds, BlueOdds, RedAge, BlueAge, RedHeightCms, RedReachCms, and so forth  
 - **Categorical attributes:** Finish method (e.g., KO/TKO, Submission, Decision), WeightClass, Country, Gender, Location, TitleBout (True/False)  
 - **Quantitative attributes:** Odds, heights, weights, ages, etc.
 
-You may assume that the dataset is located at `data/ufc-master.csv`. Please note:  
-- You must be prepared to support switching to hidden test datasets ("Test1" and "Test2") as well, located at `/testing/data/Test1.csv` and `/testing/data/Test2.csv`.  
+You may assume that the dataset is located at `data/ufc-master.csv`
+- You must support switching to hidden test datasets ("Test1" and "Test2") as well, located at `/data/Test1.csv` and `/data/Test2.csv`.  
 - Your code should dynamically parse the datasets.  
-- Ensure that changing attributes or datasets does not break your visualization.
-
+- Ensure that changing attributes or datasets do not break your visualization.
 
 ## Step 0: Set-Up
 
@@ -90,14 +87,6 @@ When the user lassos points in the beeswarm, create or update a **grouped bar ch
 - When the brush on the stacked chart changes the time range, smoothly update the beeswarm points (add/remove points, or move them).
 - When the lasso selection changes (including clearing it), animate the grouped bar chart to show/hide bars.
 
-## Extra Credit Opportunities (Optional)
-
-- **Extra Credit #1 (+1):** Animate the axes and legends in sync with attribute changes. For example, when changing the Distribution Attribute in the beeswarm, move the points and simultaneously update the axis scale and ticks with a nice transition.
-- **Extra Credit #2 (+1):** Use a more sophisticated layout or shape for the beeswarm (e.g., add jitter vertically) and animate point rearrangements smoothly.
-- **Extra Credit #3 (+2):** Add a toggle to show another type of distribution visualization in place of the stacked chart (e.g., a small multiples view or a heatmap), and animate the change between chart types.
-
-A maximum of 3 extra credit points may be awarded.
-
 ## Grading and Submission
 
 - Your solution should be clear, functional, and well-structured.
@@ -106,12 +95,10 @@ A maximum of 3 extra credit points may be awarded.
 - Submit `index.html`, `styles.css`, `script.js`, and `ufc-master.csv`. Include instructions for any special server needs.
 
 Points (Approximate):  
-- Control panel & dataset loading: ~2 points  
-- Stacked chart & brushing: ~3 points  
-- Beeswarm plot & attribute changes: ~3 points  
-- Lasso and linked grouped bar chart: ~2 points  
-- Staged transitions & design quality: ~0.5 points  
-- Code clarity/comments: ~0.5 points  
-- Extra credit: up to +3 points
+- Control panel & dataset loading: 2 points  
+- Stacked chart & brushing: 3 points  
+- Beeswarm plot & attribute changes: 3 points  
+- Lasso and linked grouped bar chart: 2 points  
+- Staged transitions & design quality: ~1 points  
 
-**Total (without extra credit):** ~11 points (scaled to the 1% extra credit)
+**Total (without extra credit):** 11 points 
