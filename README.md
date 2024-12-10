@@ -1,81 +1,117 @@
 
-# CSE 478: Homework #X: UFC Fights Visualization
 
-## Overview
+# Homework #X: UFC Visualization with D3 Transitions and Linked Views
 
-In this assignment, you will use D3.js to visualize data from a large `ufc-master.csv` dataset. The dataset includes thousands of UFC fights with attributes such as fighter odds, dates, winners, finishing methods, and more. Your goal is to provide insights into how fight odds and outcomes vary over time.
+## **Overview:**  
+For this optional extra credit assignment, you will create an interactive, multi-view visualization using D3.js to analyze a large UFC dataset. You will produce three linked visualizations that allow users to explore fight trends over time, investigate the distribution of selected attributes, and drill down into finer-grained categorizations through brushing and lasso selections. This assignment is similar in spirit to Homework #4 (in terms of using D3 joins, transitions, and coordinated views), but with a different set of visualizations and interactions.
 
-**Key Changes:**  
-This assignment is simplified compared to previous versions. You will produce **two main visualizations** and may implement a **third optional visualization** for extra credit. Additional extra credit is available for implementing transitions and comparison features.
+This assignment is worth up to 1% extra credit towards your overall course grade.
 
-Data
-**Dataset:** `ufc-master.csv` (provided)  
-You have access to a large dataset of UFC fights with attributes including date, fighter odds, winner, finishing method, weight class, location, and more.  
+**Important Notes:**  
+- You must implement data-driven joins, animated transitions, brushing, and lassoing, as well as a control panel with various interactive components.  
+- Your final visualization must demonstrate clear and thoughtful design, with axes, legends, and labels that update dynamically.  
+- **No starter code provided.** You will write everything from scratch.  
+- Cheating or using AI-generated code is not allowed.  
+- This is extra credit and should reflect a solid understanding of D3’s capabilities.
 
-You must load and parse the dataset (e.g., convert numeric fields, parse dates) and handle missing data as needed.
+**Dataset**
+You will use the provided `ufc-master.csv` dataset, which includes thousands of UFC fights. The data includes attributes such as:  
+- **Date** (fight event date)  
+- **Fighter attributes:** RedOdds, BlueOdds, RedAge, BlueAge, RedHeightCms, RedReachCms, and so forth  
+- **Categorical attributes:** Finish method (e.g., KO/TKO, Submission, Decision), WeightClass, Country, Gender, Location, TitleBout (True/False)  
+- **Quantitative attributes:** Odds, heights, weights, ages, etc.
 
-## Visualization Requirements
+You may assume that the dataset is located at `data/ufc-master.csv`. Please note:  
+- You must be prepared to support switching to hidden test datasets ("Test1" and "Test2") as well, located at `/testing/data/Test1.csv` and `/testing/data/Test2.csv`.  
+- Your code should dynamically parse the datasets.  
+- Ensure that changing attributes or datasets does not break your visualization.
 
-You will create **two main required visualizations** and have the option for extra credit to add a third visualization and additional interaction.
 
-### 0. Set-up (5 points)
+## Step 0: Set-Up
 
-- Add a title to your web page: "UFC Fights Visualization"  
-- Include your name and email at the top of the page.  
-- Add a short introductory paragraph (2-3 sentences) describing what the dataset is and what users can learn from your visualizations.
+1. Create `index.html`, `styles.css`, and `main.js`.
+2. Add a title: **"UFC Fights Visualization"**.
+3. Include your name and school email 
 
-### 1. Visualization #1: Odds Over Time (30 points)
+## Step 1: Control Panel & Dataset Loading
 
-- Create a **line chart** that shows how the average odds of the "Red" fighter changes over time.  
-  - For example, aggregate the data by month (or another suitable time bucket) and compute the average RedOdds for each month.  
-  - The x-axis should represent time, and the y-axis should represent the average RedOdds.  
-- Add appropriate axes, labels, and a title.  
-- This visualization should provide an overall trend of how fighter odds vary over time.
+Create a control panel (positioned at the top or side of the page) containing:
 
-### 2. Visualization #2: Finishing Methods by Selected Month (30 points)
+1. **Dataset Selector:** A `<select>` to choose from `ufc-master.csv`, `Test1`, and `Test2`. When the dataset changes, you must re-load the data and update all dropdowns and charts accordingly.
+2. **Time Aggregation Attribute:** A dropdown to specify how to group fights over time for the first visualization (e.g., by month or quarter).  
+3. **Stacked Category Attribute:** A dropdown to choose which categorical attribute to use for a stacked area or stacked bar chart (e.g., Finish method, WeightClass). This will define the segments in the stacked chart.
+4. **Distribution Attribute (Beeswarm Plot):** A dropdown for choosing a quantitative attribute (e.g., RedOdds, RedAge, RedHeightCms) to display in a **beeswarm plot**. This attribute will determine the axis position of points.
+5. **Color Attribute (Beeswarm Plot):** A dropdown to choose a categorical attribute (e.g., WeightClass, Gender) to color the beeswarm points.
+6. **Detail Attribute (Grouped Bar Chart):** A dropdown for selecting which categorical attribute to show in the grouped bar chart that summarizes the selected fights from the beeswarm.
 
-- Below the line chart, create a **bar chart** (or another suitable chart) that shows the distribution of finishing methods (e.g., KO/TKO, Submission, Decision) for a user-selected month (or time period).  
-- Provide a simple interface (like a dropdown or a slider) that allows the user to select a specific month (or date range). When changed, the bar chart updates to show the finishing method counts or percentages for that selected month.  
-- Add appropriate axes, labels, and a legend if needed.  
-- This visualization allows the user to drill down into a specific time period from the line chart to see what types of finishes were most common.
+The control panel should be well-labeled and styled. When the user picks new attributes, update the visualizations accordingly with smooth transitions.
 
-### Extra Credit #1: Third Visualization (up to +10 points)
+## Step 2: Stacked Chart Over Time
 
-- Add a **third visualization** of your choice that relates to the data. Some ideas:
-  - A scatter plot showing odds vs. fighter height or reach, filtered by a user selection.
-  - A heatmap calendar showing the number of fights per day.
-  - A stacked bar chart showing finishing methods by weight class.
-- This visualization should be distinct from the first two and should provide additional insight into the data.
+Implement a **stacked area chart** or **stacked bar chart** that shows the number of fights over time, segmented by the chosen Stacked Category Attribute. For example, if the user chooses "Finish" as the attribute, each segment in the stack represents a finish type, and the total height shows total fights per time unit.
 
-### Extra Credit #2: Transitions (up to +5 points)
+- The x-axis: Time (based on the selected time aggregation, e.g. monthly or quarterly bins).
+- The y-axis: Count of fights.
+- A legend should show the color-keyed categories.
+- Implement a **brush** on this chart: the user can click and drag over the time axis to highlight a subset of time periods. This brushed selection will filter which fights are displayed in the other views (beeswarm and grouped bar chart).
 
-- Add transitions when updating the bar chart for the selected month.  
-- For example, when the user picks a new month, the bars should animate to their new heights rather than jump instantly.
+When the user changes the stacked category or dataset, update the stacks with a transition (e.g., smoothly morph from the old segmentation to the new one).
 
-### Extra Credit #3: Comparison Mode (up to +5 points)
+## Step 3: Beeswarm Plot of Selected Subset
 
-- Add a comparison feature that allows the user to compare two months side-by-side in the second visualization.  
-- For instance, show two sets of bars: one for the currently selected month and one for a user-defined "comparison" month.  
-- Include transitions when switching months in comparison mode.
+Below or beside the stacked chart, create a **beeswarm plot** that shows the distribution of the selected Distribution Attribute for the fights within the currently brushed time range. If no brush is active, the beeswarm shows all fights.
 
-## Code Quality & Comments (5 points)
+- The beeswarm plot’s x-axis will represent the chosen quantitative attribute (Distribution Attribute).
+- Each point corresponds to one fight, and is colored by the chosen Color Attribute (categorical).
+- Include a small legend or color key for the beeswarm categories.
 
-- Write clear, well-structured, and well-commented code.  
-- Briefly summarize your approach and any assumptions at the top of your main JavaScript file.
+Implement a **lasso tool** on the beeswarm plot:
 
-## Grading Breakdown
+- The user can click-drag to lasso a subset of points.
+- Highlight selected points and de-emphasize others.
+- Clicking without dragging resets the selection (no points selected).
 
-- (5 pts) Title, name, introduction  
-- (30 pts) Visualization #1: Odds Over Time  
-- (30 pts) Visualization #2: Finishing Methods by Selected Month (with interactive selection)  
-- (5 pts) Code clarity and comments  
-- Extra Credit:  
-  - (+ up to 10 pts) Third Visualization  
-  - (+ up to 5 pts) Transitions  
-  - (+ up to 5 pts) Comparison Mode
+Whenever the brushed time range changes on the stacked chart, the beeswarm updates to show only those fights in that time subset. Animate point transitions if the attribute changes (e.g., points move horizontally if the Distribution Attribute changes).
 
-**Total possible (without extra credit):** 70 points  
-**Maximum with all extra credit:** 90+ points
+### Step 4: Grouped Bar Chart of Lassoed Points
 
-**Submission:**  
-- Submit your HTML, CSS, JS, and `ufc-master.csv` files.  
+When the user lassos points in the beeswarm, create or update a **grouped bar chart** that summarizes the selected points by the chosen Detail Attribute (categorical). For example, if Detail Attribute = WeightClass, each bar group represents a category (e.g., Featherweight, Lightweight, etc.), and the height represents the count of selected points in that category.
+
+- If no points are selected, the grouped bar chart should show no bars (or animate them to zero).
+- If points become selected, animate the bars growing from zero to their appropriate height.
+- When attributes change or the selection changes, update the bars smoothly.
+
+## Step 5: Staged Transitions and Clearing States
+
+- When attributes or datasets change:
+  - Animate the stacked chart (e.g., smoothly transition from old stack segments to new).
+  - Animate beeswarm points to new positions if Distribution Attribute changes.
+  - Clear or update the grouped bar chart accordingly.
+- When the brush on the stacked chart changes the time range, smoothly update the beeswarm points (add/remove points, or move them).
+- When the lasso selection changes (including clearing it), animate the grouped bar chart to show/hide bars.
+
+## Extra Credit Opportunities (Optional)
+
+- **Extra Credit #1 (+1):** Animate the axes and legends in sync with attribute changes. For example, when changing the Distribution Attribute in the beeswarm, move the points and simultaneously update the axis scale and ticks with a nice transition.
+- **Extra Credit #2 (+1):** Use a more sophisticated layout or shape for the beeswarm (e.g., add jitter vertically) and animate point rearrangements smoothly.
+- **Extra Credit #3 (+2):** Add a toggle to show another type of distribution visualization in place of the stacked chart (e.g., a small multiples view or a heatmap), and animate the change between chart types.
+
+A maximum of 3 extra credit points may be awarded.
+
+## Grading and Submission
+
+- Your solution should be clear, functional, and well-structured.
+- Include comments explaining key parts of your code and logic.
+- We will test using the provided `ufc-master.csv` and hidden test datasets.
+- Submit `index.html`, `styles.css`, `script.js`, and `ufc-master.csv`. Include instructions for any special server needs.
+
+Points (Approximate):  
+- Control panel & dataset loading: ~2 points  
+- Stacked chart & brushing: ~3 points  
+- Beeswarm plot & attribute changes: ~3 points  
+- Lasso and linked grouped bar chart: ~2 points  
+- Staged transitions & design quality: ~0.5 points  
+- Code clarity/comments: ~0.5 points  
+- Extra credit: up to +3 points
+
+**Total (without extra credit):** ~11 points (scaled to the 1% extra credit)
